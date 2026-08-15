@@ -1,18 +1,39 @@
-# AI Vendor Data-Trust Index — v0
+# AI Vendor Data-Trust Index
 
-A separate Cloudflare Worker + D1 that publishes a **source-cited** record of how AI products
-handle your data (trains-on-data, zero-retention, opt-out, retention). Served at
-**`trust.oscar-lopez.com`**. Same moat as the price index: **verifiable transparency** — every
-value carries a quote, source URL, confidence, and date, and nothing is presented as verified
-until it has been verbatim-checked.
+[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](./LICENSE) [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-green.svg)](https://creativecommons.org/licenses/by/4.0/) [![MCP](https://img.shields.io/badge/MCP-streamable--http-8A2BE2.svg)](https://trust.oscar-lopez.com/mcp)
 
-## Status: PROVISIONAL SEED
+A **source-cited** record of how AI products handle your data — whether the vendor **trains on your
+inputs**, whether **zero data retention** is available, and whether you can **opt out** — across 11
+products (OpenAI, Anthropic, Google Vertex & Gemini, Azure OpenAI, AWS Bedrock, Microsoft 365 Copilot,
+GitHub Copilot, Mistral, Meta Llama). Every value carries a **verbatim quote from the vendor's live
+policy**, a source URL, a confidence level, and the date it was checked. Ambiguous cases are marked
+`unclear` rather than guessed. An automated verifier re-checks the policies **weekly** and only publishes
+a value when a verbatim quote supports it — otherwise it holds the last human-verified value.
 
-The 6 seeded vendors (OpenAI API, ChatGPT consumer, Anthropic API, Google Vertex, Microsoft 365
-Copilot, GitHub Copilot Business) are populated from public reporting to prove the pipeline.
-**Every row is flagged `seed-provisional`** and every API response returns `"provisional": true`.
-Before attaching this to a public domain: verbatim-verify each quote against the live policy,
-flip the row to `verified_by='human'`, then set the `PUBLIC_READY` var to `"true"`.
+- **Live index (human view):** https://data.oscar-lopez.com/ai-trust
+- **Free comparison API:** `GET https://trust.oscar-lopez.com/v1/ai-trust/matrix`
+- **Cite as:** López, O. E. (2026). *AI Vendor Data-Trust Index.* https://data.oscar-lopez.com/ai-trust
+
+## For AI agents (MCP)
+
+This is a remote MCP server (streamable-http). Add it to your MCP client:
+
+```json
+{
+  "mcpServers": {
+    "ai-vendor-data-trust": {
+      "type": "streamable-http",
+      "url": "https://trust.oscar-lopez.com/mcp"
+    }
+  }
+}
+```
+
+Tools: `get_ai_vendor_trust_headline` (free — verdict + cited fields for one vendor),
+`get_ai_vendor_trust_compare` (free — one field across all vendors), `get_ai_vendor_trust`
+(paid, x402 — full cited record). Vendor IDs: `openai-api`, `openai-consumer`, `anthropic-api`,
+`google-vertex`, `google-gemini-consumer`, `microsoft-copilot`, `azure-openai`, `aws-bedrock`,
+`mistral-api`, `meta-llama`, `github-copilot`.
 
 ## Endpoints
 
@@ -27,7 +48,7 @@ Paid (mock x402 — 402 challenge → echo `{resource,nonce,mac}` in `X-PAYMENT`
 Other: `POST /mcp` (JSON-RPC: 2 free tools + 1 paid), `GET /openapi.json`,
 `GET /.well-known/x402`, `GET /admin/config?key=<STATS_TOKEN>` (config lever).
 
-## Deploy (user runs — Claude cannot deploy)
+## Deploy
 
 ```bash
 cd ai-trust-index
