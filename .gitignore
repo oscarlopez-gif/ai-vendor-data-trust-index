@@ -6,3 +6,8 @@ dist/
 *.log
 /tmp/
 .DS_Store
+
+# MCP publisher artifacts — auth tokens + binary, never commit
+mcp-publisher.exe
+mcp-publisher.tar.gz
+.mcpregistry_*
