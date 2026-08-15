@@ -1,0 +1,41 @@
+{
+	// AI Vendor Data-Trust Index — separate Worker, own D1, served at trust.oscar-lopez.com.
+	// After `npm run db:create`, paste the returned database_id below.
+	"name": "ai-trust-index",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-08-01",
+	"observability": {
+		"enabled": true
+	},
+	// Sandbox vars — move MOCK_PAYMENT_SECRET / STATS_TOKEN to secrets for real use.
+	"vars": {
+		// MOCK_PAYMENT_SECRET and STATS_TOKEN are set via `wrangler secret put` — never committed to the repo.
+		"PRICE_USD": "0.02",
+		"PAY_TO": "0xSANDBOX000000000000000000000000000000000",
+		"PAY_NETWORK": "mock",
+		"PAY_ASSET": "mock-usdc",
+		"PUBLIC_READY": "true",
+		"EXTRACTOR_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+	},
+
+	// Workers AI binding — the verifier's default extractor (no external key needed).
+	// To use a frontier model instead, set AI_GATEWAY_URL + AI_GATEWAY_TOKEN (secret) and EXTRACTOR_MODEL.
+	"ai": { "binding": "AI" },
+
+	// Weekly verifier run — Mondays 12:00 UTC.
+	"triggers": { "crons": ["0 12 * * 1"] },
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "ai-trust",
+			"database_id": "fa5118e7-e519-4a54-9857-c9db37c7fbe8",
+			"remote": true
+		}
+	],
+	"routes": [
+		{
+			"pattern": "trust.oscar-lopez.com",
+			"custom_domain": true
+		}
+	]
+}

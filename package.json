@@ -1,0 +1,20 @@
+{
+  "name": "ai-trust-index",
+  "version": "0.0.1",
+  "private": true,
+  "description": "AI Vendor Data-Trust Index — transparent, source-cited record of how AI products handle your data. Cloudflare Worker + D1.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create ai-trust",
+    "schema:remote": "wrangler d1 execute ai-trust --remote --file=./schema.sql",
+    "seed:remote": "wrangler d1 execute ai-trust --remote --file=./seed/seed.sql",
+    "schema:local": "wrangler d1 execute ai-trust --local --file=./schema.sql",
+    "seed:local": "wrangler d1 execute ai-trust --local --file=./seed/seed.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260812.1",
+    "wrangler": "^4.121.0"
+  }
+}

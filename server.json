@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.oscarlopez-gif/ai-vendor-data-trust-index",
+  "description": "Source-cited comparison of how AI vendors handle your data — trains-on-data, zero data retention, opt-out — across 11 products (OpenAI, Anthropic, Google, Microsoft, AWS Bedrock, Azure OpenAI, Mistral, GitHub Copilot, Meta Llama). Every value carries a verbatim policy quote + source URL + date; auto-verified weekly. Free comparison + per-vendor cited verdict; paid full records (x402).",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/oscarlopez-gif/ai-vendor-data-trust-index",
+    "source": "github"
+  },
+  "websiteUrl": "https://data.oscar-lopez.com/ai-trust",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://trust.oscar-lopez.com/mcp"
+    }
+  ]
+}
